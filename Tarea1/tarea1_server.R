@@ -3,10 +3,6 @@ tarea1 <- function(input, output, session) {
   X <- reactive({runif(10^input$muestras)})
   # Calculo
   lamda <- reactive({input$rate})
-  # Invexp <- function(x,lam=1){
-  #   -log(1-x)/lam
-  # }
-  # Y <- Invexp(X(),lamda())
   Y <- reactive({-log(1-X())/lamda()})
   
   output$UniGraf <- renderPlotly({

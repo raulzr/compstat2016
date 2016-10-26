@@ -1,14 +1,6 @@
 tarea2UI <- function(id){
   ns <- NS(id)
   tagList(
-  
-  #titlePanel("Old Faithful Geyser Data"),
-  #titlePanel("Hola")
-    
-    # numericInput(ns('n'), 'Number of obs', 100),
-    # plotOutput(ns('plot')),
-  
-    
     h2("Integración con Monte-Carlo"),
     sidebarLayout(
       sidebarPanel(
@@ -23,8 +15,5 @@ tarea2UI <- function(id){
       )
       
     )
-  
-  
-  
   
 )}
