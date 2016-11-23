@@ -9,3 +9,5 @@ source("./Tarea2/tarea2_server.R")
 # Archivos Tarea 4
 source("./Tarea4/tarea4_ui.R")
 source("./Tarea4/tarea4_server.R")
+
+tab_vino <- read.csv("./Tarea4/wine.csv")
