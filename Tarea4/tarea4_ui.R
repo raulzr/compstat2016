@@ -11,14 +11,7 @@ tarea4UI <- function(id){
       mainPanel(
         h2("Scatterplot"),
         plotOutput(ns("Grafica"))
-      ))),
-    fluidRow(
-      h3("Distribuciones a elegir:"),
-      column(4, selectInput(ns("dist_alpha"),"Alpha",c("Normal","Gamma")) ),
-      column(4, selectInput(ns("dist_beta"),"Betha",c("Normal","Gamma")) ),
-      column(4, selectInput(ns("dist_sigma"),"Sigma",c("Normal","Gamma")) )
-    )
-    
+      )))
     
   )
 }
