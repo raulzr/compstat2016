@@ -26,7 +26,7 @@ tarea5UI <- function(id){
         fluidRow((h3("Grafica"))),
         fluidRow(plotOutput(ns("Grafica"))),
         h3("Resultados: "),
-        textOutput(ns("resultado"))
+        DT::dataTableOutput((ns("resultado")))
                  
         
       ))
