@@ -23,7 +23,7 @@ tarea5UI <- function(id){
                  column(selectInput(ns("y"),"Selecciona Y:", names(tab_vino)), width = 3)
                  ),
         fluidRow(h2("Simulaciones: "),actionButton(ns("sim_boton"), "A simular !!!")),
-        fluidRow((ns("Grafica"))),
+        fluidRow((h3("Grafica"))),
         fluidRow(plotOutput(ns("Grafica"))),
         h3("Resultados: "),
         textOutput(ns("resultado"))
