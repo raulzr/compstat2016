@@ -2,23 +2,26 @@ tarea5 <- function(input, output, session) {
   
   output$Grafica <- renderPlot({
     if (input$sim_boton>0){
+      
       x <- unname(unlist(iris[1]))
       y <- unname(unlist(iris[3]))
       
-      res <<- run_mcmc(n_sim=1000,
+      res <<- run_mcmc(n_sim=10^input$no_sim,
                       theta0 = c(1,1,1),
-                      X=x,
-                      Y=y,
+                      X=unname(unlist(tab_vino[input$x])),
+                      Y=unname(unlist(tab_vino[input$y])),
                       jump=0.05,
-                      mean_a=0,
-                      sd_a=1,
-                      mean_b=0,
-                      sd_b=1,
-                      shape_sigma2=1,
-                      scale_sigma2=1)
+                      mean_a=input$alpha_m,
+                      sd_a=input$alpha_sd,
+                      mean_b=input$beta_m,
+                      sd_b=input$beta_sd,
+                      shape_sigma2=input$shape,
+                      scale_sigma2=input$scale)
       df <- data.frame(res)
       
       return(pairs(res, labels = c("Alpha","Betha","Sigma")))
+      
+      #plot(res[,3])
       
       #return(hist(rnorm(100)))
     }
