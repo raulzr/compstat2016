@@ -1,17 +1,17 @@
 tarea4UI <- function(id){
   ns <- NS(id)
   tagList(
-    h2("Regresión lineal con MCMC"),
-    fluidRow(DT::dataTableOutput(ns("table"))),
-    fluidRow(
-      sidebarLayout(
-        sidebarPanel(
-      selectInput(ns("x"),"Selecciona X:", names(tab_vino)),
-      selectInput(ns("y"),"Selecciona Y:", names(tab_vino))),
-      mainPanel(
-        h2("Scatterplot"),
-        plotOutput(ns("Grafica"))
-      )))
+    h2("Regresión lineal con MCMC - Visualización"),
     
-  )
+    column(
+    fluidRow(
+      column(selectInput(ns("x"),"Selecciona X:", names(tab_vino), selected = 'Ash'), width = 3),
+      column(selectInput(ns("y"),"Selecciona Y:", names(tab_vino), selected = 'AlcalinityOfAsh'), width = 3),
+      plotOutput(ns("Grafica"))
+      )
+    , width = 6),
+    column(fluidPage(DT::dataTableOutput(ns("table")))
+           , width = 6)
+
+    )
 }
