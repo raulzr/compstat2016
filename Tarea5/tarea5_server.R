@@ -19,9 +19,15 @@ tarea5 <- function(input, output, session) {
                       scale_sigma2=input$scale)
       df <- data.frame(res)
       
-      return(pairs(res, labels = c("Alpha","Betha","Sigma")))
+      #return(pairs(res, labels = c("Alpha","Betha","Sigma")))
       
-      #plot(res[,3])
+      par(mfrow=c(2,3))
+      plot(res[,1], main = "Alpha")
+      plot(res[,2], main = "Beta")
+      plot(res[,3], main = "Sigma")
+      hist(res[,1], main = "Alpha")
+      hist(res[,2], main = "Beta")
+      hist(res[,3], main = "Sigma")
       
       #return(hist(rnorm(100)))
     }
