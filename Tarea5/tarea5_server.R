@@ -21,13 +21,17 @@ tarea5 <- function(input, output, session) {
       
       #return(pairs(res, labels = c("Alpha","Betha","Sigma")))
       
-      par(mfrow=c(2,3))
-      plot(res[,1], main = "Alpha")
-      plot(res[,2], main = "Beta")
-      plot(res[,3], main = "Sigma")
-      hist(res[,1], main = "Alpha")
-      hist(res[,2], main = "Beta")
-      hist(res[,3], main = "Sigma")
+      par(mfrow=c(3,3))
+      plot(res[,1], main = "Alpha - Sim")
+      plot(res[,2], main = "Beta - Sim")
+      plot(res[,3], main = "Sigma - Sim")
+      plot(density(res[,1]), main = "Alpha - Prior (Azul) Post. (Rojo)", col='red')
+      lines(density(rnorm(5000)), col='blue')
+      plot(density(res[,2]), main = "Beta - Prior (Azul) Post. (Rojo)", col='red')
+      lines(density(rnorm(5000)), col='blue')
+      plot(density(res[,3]), main = "Sigma - Prior (Azul) Post. (Rojo)", col='red')
+      lines(density(rgamma(5000, shape = 1, rate = 1)), col='blue')
+      plot(unname(unlist(tab_vino[input$x])),unname(unlist(tab_vino[input$y])))
       
       #return(hist(rnorm(100)))
     }
