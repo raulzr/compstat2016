@@ -1,5 +1,8 @@
 library(Rcpp)
 library(RcppArmadillo)
+library(ggplot2)
+library(plotly)
+library(DT)
 
 # Archivos Tarea 1
 source("./Tarea1/tarea1_ui.R")

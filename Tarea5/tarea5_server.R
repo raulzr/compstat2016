@@ -3,8 +3,8 @@ tarea5 <- function(input, output, session) {
   output$Grafica <- renderPlot({
     if (input$sim_boton>0){
       
-      x <- unname(unlist(iris[1]))
-      y <- unname(unlist(iris[3]))
+      # x <- unname(unlist(iris[1]))
+      # y <- unname(unlist(iris[3]))
       
       res <<- run_mcmc(n_sim=10^input$no_sim,
                       theta0 = c(1,1,1),
