@@ -1,7 +1,17 @@
 #include <RcppArmadillo.h>   
+
 // [[Rcpp::depends(RcppArmadillo)]]
 using namespace Rcpp;
-using namespace std;
+
+// [[Rcpp::export]]
+
+NumericMatrix mvrnorm(int n, NumericVector mu, NumericMatrix sigma) {// aqui agregé la funcion que permite de simular una normal 3D
+  int ncols = sigma.ncol();                                         // no pregunté porque ! porque es una teoria en mathematica bastante difficil
+  arma::mat Y = arma::randn(n, ncols);                              // int n: es para saber cuanto resultado quiero por ejemplo si n=2 tenemos como resultado
+  return wrap(arma::repmat(as<arma::vec>(mu), 1, n).t() + Y * arma::chol(as<arma::mat>(sigma)));//una matriz (2,3) donde cada columna es una simulacion para un vector
+}
+
+
 
 // [[Rcpp::export]]
 double logapriori_a(double a, double mean_a,double sd_a){
@@ -56,7 +66,7 @@ double log_LH(NumericVector theta, NumericVector X, NumericVector Y)
   double log_LH =0;
   for (int i=0; i < n; i++)
   {
-    log_LH += log(R::dnorm(error[i],0,sqrt(sigma2),0));
+    log_LH +=R::dnorm(error[i],0,sqrt(sigma2),1);//corregi aqui es mejor de llamar el log directamente al poner 1
   }
   return log_LH;
 }
@@ -77,12 +87,12 @@ double log_POS(NumericVector theta,
 }
 
 // [[Rcpp::export]]
-NumericVector run_mcmc(
+NumericMatrix run_mcmc(// aqui run_mcmc da un matrix y no un vector
     int n_sim,
     NumericVector theta0,
     NumericVector X,
     NumericVector Y,
-    double jump,
+    NumericMatrix matrice_jump,// no es suficente de utilizar un real jump tenemos que entregar una matriz (ver camilo_essai.R)
     double mean_a,
     double sd_a,
     double mean_b,
@@ -93,23 +103,20 @@ NumericVector run_mcmc(
 {
   int n_param = theta0.size();
   NumericMatrix sim(n_sim + 1, n_param); // aqui voy a guardar las simulaciones
-  NumericVector eta(n_param);
-  sim(0,_)=theta0;
-  // sim(0,0) = theta0[0];
-  // sim(0,1) = theta0[1];
-  // sim(0,2) = theta0[2];
+  NumericMatrix eta(1,n_param);//IMPORTANT utilizé la funcion que permite de simular la ley N3 ademas esta funcion da un resultado como 
+  sim(0,_)=theta0;             //un matriz (1,3) 
   double U;
   bool accepted;
   for (int i=1; i < n_sim; i++) {
     // do while hasta que acepte el candidato
     do {
-      eta[0] = (rnorm(1, sim(i-1,0), jump))[0]; //alpha
-      eta[1] = (rnorm(1, sim(i-1,1), jump))[0]; //beta
-      eta[2] = rnorm(1, sim(i-1,2), jump)[0]; 
+      eta=mvrnorm(1,sim(i-1,_),matrice_jump);// cuidado no tenemos utilizar sim(i,_) pero sim(i-1,_) porque al inicio tenemos unicamente sim(0,_)
       U = (runif(1))[0];
+      
+      
       accepted = (log(U) <= 
-        log_POS(eta,X,Y, mean_a, sd_a, mean_b, sd_b, shape_sigma2, scale_sigma2) 
-                    - log_POS(sim(i,_),X,Y, mean_a, sd_a, mean_b, sd_b, shape_sigma2, scale_sigma2));
+        log_POS(eta(0,_),X,Y, mean_a, sd_a, mean_b, sd_b, shape_sigma2, scale_sigma2) 
+                    - log_POS(sim(i-1,_),X,Y, mean_a, sd_a, mean_b, sd_b, shape_sigma2, scale_sigma2));
     } while (!accepted);//or menor que max iter
     sim(i,_) = eta;
     

@@ -5,12 +5,12 @@ tarea5 <- function(input, output, session) {
       
       # x <- unname(unlist(iris[1]))
       # y <- unname(unlist(iris[3]))
-      
+      matrice_jump=0.01*matrix(c(2,0,0,0,1,0,0,0,1),nrow = 3,ncol=3,byrow = T)
       res <<- run_mcmc(n_sim=10^input$no_sim,
                       theta0 = c(1,1,1),
                       X=unname(unlist(tab_vino[input$x])),
                       Y=unname(unlist(tab_vino[input$y])),
-                      jump=0.05,
+                      matrice_jump,
                       mean_a=input$alpha_m,
                       sd_a=input$alpha_sd,
                       mean_b=input$beta_m,
