@@ -15,7 +15,7 @@ tarea1 <- function(input, output, session) {
     l <- seq(0,5,,50)
     yexp <- dexp(l,rate = lamda())
     plot_ly(x=Y(),type = "histogram",name="Muestra") %>%
-      add_trace(y=yexp,x=l, yaxis = "y2",name="Modelo") %>%
+      add_trace(y=yexp,x=l, yaxis = "y2", type ='scatter', mode='lines', name="Modelo") %>%
       layout(yaxis2 = list(side="right",overlaying="y"))
   })
   output$vered <- renderPrint({
