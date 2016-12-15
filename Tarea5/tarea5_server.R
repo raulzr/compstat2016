@@ -20,19 +20,26 @@ tarea5 <- function(input, output, session) {
       df <- data.frame(res)
       
       #return(pairs(res, labels = c("Alpha","Betha","Sigma")))
+      a <- mean(res[,1])
+      b <- mean(res[,2])
+      s <- mean(res[,3])
+      x.max <- max(unname(unlist(tab_vino[input$x])))
+      x.min <- min(unname(unlist(tab_vino[input$x])))
+      x <- seq(x.min,x.max,length.out = 100)
+      y <- b*x+a
       
       par(mfrow=c(3,3))
-      plot(res[,1], main = "Alpha - Sim")
-      plot(res[,2], main = "Beta - Sim")
-      plot(res[,3], main = "Sigma - Sim")
+      plot(res[,1], main = "Alpha - Sim", type = 'l', ylab = '')
+      plot(res[,2], main = "Beta - Sim", type = 'l', ylab = '')
+      plot(res[,3], main = "Sigma - Sim", type = 'l', ylab = '')
       plot(density(res[,1]), main = "Alpha - Prior (Azul) Post. (Rojo)", col='red')
-      lines(density(rnorm(5000)), col='blue')
+      lines(density(rnorm(5000, mean = input$alpha_m, sd=input$alpha_sd)), col='blue')
       plot(density(res[,2]), main = "Beta - Prior (Azul) Post. (Rojo)", col='red')
-      lines(density(rnorm(5000)), col='blue')
+      lines(density(rnorm(5000, mean = input$beta_m, sd=input$beta_sd)), col='blue')
       plot(density(res[,3]), main = "Sigma - Prior (Azul) Post. (Rojo)", col='red')
-      lines(density(rgamma(5000, shape = 1, rate = 1)), col='blue')
-      plot(unname(unlist(tab_vino[input$x])),unname(unlist(tab_vino[input$y])))
-      
+      lines(density(rgamma(5000, shape = input$shape, rate = input$scale)), col='blue')
+      plot(unname(unlist(tab_vino[input$x])),unname(unlist(tab_vino[input$y])), xlab = input$x, ylab = input$y)
+      lines(x,y, col='red')
       #return(hist(rnorm(100)))
     }
     else{

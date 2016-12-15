@@ -18,9 +18,9 @@ tarea5UI <- function(id){
         numericInput(ns("scale"),"Escala:",1)
       ),
       mainPanel(
-        fluidRow(column(sliderInput(ns("no_sim"),"Numero de sim 10^n:",1,4,4), width = 3),
-                 column(selectInput(ns("x"),"Selecciona X:", names(tab_vino)), width = 3),
-                 column(selectInput(ns("y"),"Selecciona Y:", names(tab_vino)), width = 3)
+        fluidRow(column(sliderInput(ns("no_sim"),"Numero de sim 10^n:",2,5,3), width = 3),
+                 column(selectInput(ns("x"),"Selecciona X:", names(tab_vino), selected = 'Ash'), width = 3),
+                 column(selectInput(ns("y"),"Selecciona Y:", names(tab_vino), selected = 'AlcalinityOfAsh'), width = 3)
                  ),
         fluidRow(h2("Simulaciones: "),actionButton(ns("sim_boton"), "A simular !!!")),
         fluidRow((h3("Grafica"))),
